@@ -1,0 +1,45 @@
+Object-Relational mapping for Web SQL is a LGPL JavaScript? library that allows you develop easily rich database Internet apps using the ORM paradigm.
+
+ORM HTML5 is inspired by Django model.
+
+How to?
+1. Include "orm.js"
+    <script language="JavaScript" src="orm.js"></script>
+2. Define your models
+    <script language="JavaScript">
+
+      function Client(db)
+      {
+        this.base = ModelBase;
+        this.base("client");         // Name of table
+               // Specifies the fields: 
+               //             name:       string not null
+               //             surname:    string
+               //             age:        integer
+        this.fields = ["snName", "sSurname", "iAge"];
+               // Preload objects in table      
+        this.predata = [   {id:1, name: 'John' , surname: 'Smith', age: 20 },
+                           {id:2, name: 'Ana' , surname: 'Castillo', age: null} ];
+        // Initialiaze
+        this.init(db);       
+      }
+      // Create DB Manager
+      dbm = new DBM('ERP');
+      // Register your models
+      dbm.register(['Client']);
+    </script>
+3. Use it!
+    <script language="JavaScript">
+
+      var c = new Client(dbm);
+      c.name = 'David';
+      c.surname = 'Lohan';
+      c.age = '30';
+      c.save(function (result) { if (result) alert('save ok'); });
+    </script>
+How works?
+ORM-HTML5 use Javascript's reflection and Web SQL API (no needs external libraries).
+
+DBM.register() create the tables of models if is necessary. Also loads "preload" data.
+
+
