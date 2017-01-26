@@ -735,7 +735,7 @@ function ModelBase(tablename){
                     // Establecer el ID
                     ref.id = rs.rows.item(0).id;
                     if (cb) {
-                        cb();
+                        cb(ref);
                         
                     }
                 }, function(tx, err){
