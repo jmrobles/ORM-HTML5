@@ -715,8 +715,7 @@ function ModelBase(tablename){
         var ref = this;
         var cb = cb || null;
         
-        // Comprobar ID
-        if (this.id == -1) {
+        
             // INSERT
             var fields = this._getFieldsStr();
             var vFields = this._getValuesStr();
@@ -727,7 +726,10 @@ function ModelBase(tablename){
             }
             
             // -- Construir la llamada
-            var cons = "INSERT INTO " + this.tablename + " (id," + fields + ",flush) VALUES (null" + vFields.sql + ",1);";
+	    var id = "null";
+            if(this.id != -1)
+                id = this.id
+            var cons = "INSERT OR REPLACE INTO " + this.tablename + " (id," + fields + ",flush) VALUES (" + id + vFields.sql + ",1);";
             //alert(cons);
             this.db.execute(cons, [], function(tx, rs){
                 // Establecer el ID
@@ -746,16 +748,6 @@ function ModelBase(tablename){
             
                 throw "error save: " + err.message;
             });
-            
-        }
-        else {
-            // UPDATE
-            // TODO: por ahora cada vez que se modifica una propiedad se realiza un update.
-        
-        
-        
-        }
-        
     }
     
     this.get = function(arg, cb){
